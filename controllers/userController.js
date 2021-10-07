@@ -1,3 +1,4 @@
+const uid2 = require('uid2')
 const User = require('./../models/userModel')
 
 exports.signUp = async (req, res, next) => {
@@ -6,6 +7,7 @@ exports.signUp = async (req, res, next) => {
 			name: req.body.name,
 			email: req.body.email,
 			password: req.body.password,
+			token: uid2(32),
 		})
 		res
 			.status(201) // 201 stands for 'created'

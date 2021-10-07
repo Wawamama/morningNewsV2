@@ -1,36 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-import './App.css';
-import { Menu, Icon } from 'antd';
+import './App.css'
+import { Menu, Icon } from 'antd'
+import { deleteToken } from './actions'
 
 function Nav() {
+	const dispatch = useDispatch()
+	const myArticles = useSelector(state => state.articlesReducer)
 	return (
 		<nav>
-			<Menu style={{ textAlign: 'center' }} mode='horizontal' theme='dark'>
-				<Menu.Item key='mail'>
-					<Link to='/sources'>
-						<Icon type='home' />
+			<Menu style={{ textAlign: 'center' }} mode="horizontal" theme="dark">
+				<Menu.Item key="mail">
+					<Link to="/sources">
+						<Icon type="home" />
 						Sources
 					</Link>
 				</Menu.Item>
 
-				<Menu.Item key='test'>
-					<Link to='/my-articles'>
-						<Icon type='read' />
-						My Articles
+				<Menu.Item key="test">
+					<Link to="/my-articles">
+						<Icon type="read" />
+						My Articles ({myArticles && myArticles.length})
 					</Link>
 				</Menu.Item>
 
-				<Menu.Item key='app'>
-					<Link to='/'>
-						<Icon type='logout' />
+				<Menu.Item key="app">
+					<Link to="/" onClick={() => dispatch(deleteToken())}>
+						<Icon type="logout" />
 						Logout
 					</Link>
 				</Menu.Item>
 			</Menu>
 		</nav>
-	);
+	)
 }
 
-export default Nav;
+export default Nav

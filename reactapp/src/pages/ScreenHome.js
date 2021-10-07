@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import './../App.css'
 import { Input, Button } from 'antd'
 import { Redirect } from 'react-router'
 import axios from 'axios'
+import { addToken } from '../actions'
 
 function ScreenHome() {
+	const dispatch = useDispatch()
 	const [signUpError, setSignUpError] = useState('')
 	const [signInError, setSignInError] = useState('')
 	const [isLogin, setIsLogin] = useState(false)
@@ -28,6 +31,7 @@ function ScreenHome() {
 			})
 			if (req.data.status === 'success') {
 				setIsLogin(true)
+				dispatch(addToken(req.data.data.data.token))
 			} else {
 				setSignUpError(req.data.message)
 			}
@@ -44,6 +48,7 @@ function ScreenHome() {
 			})
 			if (req.data.status === 'success') {
 				setIsLogin(true)
+				dispatch(addToken(req.data.data.data.token))
 			} else {
 				setSignInError(req.data.message)
 			}

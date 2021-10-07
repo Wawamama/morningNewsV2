@@ -11,9 +11,14 @@ import {
 import './../App.css'
 import { List, Avatar } from 'antd'
 import Nav from './../Nav'
+import Banner from '../components/Banner'
+import { useSelector } from 'react-redux'
+import { Redirect } from 'react-router'
 
 function ScreenSource() {
 	const [sourceList, setSourceList] = useState([])
+	const languages = useSelector(state => state.langReducer)
+	const token = useSelector(state => state.tokenReducer)
 
 	const getIcon = category => {
 		if (category === 'sports') return <FontAwesomeIcon icon={faFootballBall} />
@@ -25,22 +30,24 @@ function ScreenSource() {
 	useEffect(() => {
 		;(async () => {
 			const data = await axios(
-				'https://newsapi.org/v2/top-headlines/sources?apiKey=c671236d46f64be8973fffcae816ca7c&country=fr&language=fr'
+				`https://newsapi.org/v2/top-headlines/sources?apiKey=c671236d46f64be8973fffcae816ca7c&country=${languages.country}&language=${languages.lang}`
 			)
 			setSourceList(data.data.sources)
 		})()
-	}, [])
+	}, [languages])
 
-	console.log(sourceList)
+	if (!token) {
+		return <Redirect to="/" />
+	}
 	return (
 		<div>
 			<Nav />
 
-			<div className='Banner' />
+			<Banner />
 
-			<div className='HomeThemes'>
+			<div className="HomeThemes">
 				<List
-					itemLayout='horizontal'
+					itemLayout="horizontal"
 					dataSource={sourceList}
 					renderItem={item => (
 						<List.Item>

@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
 		minlength: [8, 'Password must have 8 characters minimum.'],
 		select: false,
 	},
+	token: {
+		type: String,
+	},
 })
 
 // Password encryption :
