@@ -34,7 +34,7 @@ function Nav() {
 							Logout
 						</Link>
 					) : (
-						<Link to="/" onClick={() => dispatch(deleteToken())}>
+						<Link to="/">
 							<Icon type="login" />
 							Login
 						</Link>

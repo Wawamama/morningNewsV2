@@ -8,6 +8,7 @@ exports.signUp = async (req, res, next) => {
 			email: req.body.email,
 			password: req.body.password,
 			token: uid2(32),
+			tokenGeneratedAt: Date.now(),
 		})
 		res
 			.status(201) // 201 stands for 'created'
@@ -46,6 +47,25 @@ exports.signIn = async (req, res, next) => {
 		if (!user || !(await user.correctPassword(password, user.password))) {
 			throw new Error('Incorrect email or password')
 		}
+
+		// Check if last token is not too old and change it if needed
+		// const ExpDate = new Date(user.tokenGeneratedAt.getTime() + 2 * 60000) // 2 minutes
+		const ExpDate = new Date(user.tokenGeneratedAt.getDate() + 3) // 3 days
+
+		if (ExpDate < new Date()) {
+			const userUpdated = await User.findOneAndUpdate(
+				{ email: email },
+				{ token: uid2(32), tokenGeneratedAt: Date.now() },
+				{ new: true }
+			)
+			res.status(200).json({
+				status: 'success',
+				data: {
+					data: userUpdated,
+				},
+			})
+		}
+
 		res.status(200).json({
 			status: 'success',
 			data: {

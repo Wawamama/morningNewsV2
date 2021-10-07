@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './../App.css'
 import { Input, Button } from 'antd'
 import { Redirect } from 'react-router'
@@ -11,7 +11,7 @@ function ScreenHome() {
 	const dispatch = useDispatch()
 	const [signUpError, setSignUpError] = useState('')
 	const [signInError, setSignInError] = useState('')
-	const [isLogin, setIsLogin] = useState(false)
+	const token = useSelector(state => state.tokenReducer)
 	const [signUpData, setSignUpData] = useState({
 		username: '',
 		email: '',
@@ -30,7 +30,6 @@ function ScreenHome() {
 				password: signUpData.password,
 			})
 			if (req.data.status === 'success') {
-				setIsLogin(true)
 				dispatch(addToken(req.data.data.data.token))
 			} else {
 				setSignUpError(req.data.message)
@@ -47,7 +46,6 @@ function ScreenHome() {
 				password: signInData.password,
 			})
 			if (req.data.status === 'success') {
-				setIsLogin(true)
 				dispatch(addToken(req.data.data.data.token))
 			} else {
 				setSignInError(req.data.message)
@@ -57,7 +55,15 @@ function ScreenHome() {
 		}
 	}
 
-	if (isLogin) {
+	const handleSignUpFromKey = e => {
+		if (e.key === 'Enter') handleSubmitSignUp()
+	}
+
+	const handleSignInFromKey = e => {
+		if (e.key === 'Enter') handleSubmitSignIn()
+	}
+
+	if (token) {
 		return <Redirect to="/sources" />
 	} else {
 		return (
@@ -79,6 +85,7 @@ function ScreenHome() {
 						onChange={e =>
 							setSignInData({ ...signInData, password: e.target.value })
 						}
+						onKeyPress={handleSignInFromKey}
 					/>
 					<div style={{ margin: '1rem' }}>{signInError}</div>
 
@@ -120,6 +127,7 @@ function ScreenHome() {
 						onChange={e =>
 							setSignUpData({ ...signUpData, password: e.target.value })
 						}
+						onKeyPress={handleSignUpFromKey}
 					/>
 					<div style={{ margin: '1rem' }}>{signUpError}</div>
 					<Button
