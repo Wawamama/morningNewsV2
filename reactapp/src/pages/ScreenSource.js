@@ -18,7 +18,6 @@ import { Redirect } from 'react-router'
 function ScreenSource() {
 	const [sourceList, setSourceList] = useState([])
 	const languages = useSelector(state => state.langReducer)
-	const token = useSelector(state => state.tokenReducer)
 
 	const getIcon = category => {
 		if (category === 'sports') return <FontAwesomeIcon icon={faFootballBall} />
@@ -36,9 +35,6 @@ function ScreenSource() {
 		})()
 	}, [languages])
 
-	if (!token) {
-		return <Redirect to="/" />
-	}
 	return (
 		<div>
 			<Nav />

@@ -10,6 +10,13 @@ import Banner from '../components/Banner'
 function ScreenMyArticles() {
 	const myArticles = useSelector(state => state.articlesReducer)
 	const languages = useSelector(state => state.langReducer)
+	const token = useSelector(state => state.tokenReducer)
+	let error = ''
+	if (!token) {
+		error = <p>Vous devez etre loggué pour accéder à vos articles</p>
+	} else if (myArticles.length === 0) {
+		error = <p>Vous n'avez aucun article à lire</p>
+	}
 
 	return (
 		<div>
@@ -26,7 +33,7 @@ function ScreenMyArticles() {
 					}}
 				>
 					{' '}
-					{myArticles.length === 0 ? <p>Vous n'aimez aucun article</p> : ''}
+					{error}
 					{myArticles &&
 						myArticles.map((art, idx) => (
 							<ArticleCard art={art} liked={false} />

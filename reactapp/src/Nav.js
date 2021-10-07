@@ -9,6 +9,7 @@ import { deleteToken } from './actions'
 function Nav() {
 	const dispatch = useDispatch()
 	const myArticles = useSelector(state => state.articlesReducer)
+	const token = useSelector(state => state.tokenReducer)
 	return (
 		<nav>
 			<Menu style={{ textAlign: 'center' }} mode="horizontal" theme="dark">
@@ -27,10 +28,17 @@ function Nav() {
 				</Menu.Item>
 
 				<Menu.Item key="app">
-					<Link to="/" onClick={() => dispatch(deleteToken())}>
-						<Icon type="logout" />
-						Logout
-					</Link>
+					{token ? (
+						<Link to="/" onClick={() => dispatch(deleteToken())}>
+							<Icon type="logout" />
+							Logout
+						</Link>
+					) : (
+						<Link to="/" onClick={() => dispatch(deleteToken())}>
+							<Icon type="login" />
+							Login
+						</Link>
+					)}
 				</Menu.Item>
 			</Menu>
 		</nav>
