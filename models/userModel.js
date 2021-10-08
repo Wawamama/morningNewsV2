@@ -2,6 +2,15 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
 
+const favArticles = mongoose.Schema({
+	title: String,
+	url: String,
+	imgUrl: String,
+	description: String,
+	content: String,
+	language: String,
+})
+
 const userSchema = mongoose.Schema({
 	name: {
 		type: String,
@@ -28,6 +37,7 @@ const userSchema = mongoose.Schema({
 		type: String,
 	},
 	tokenGeneratedAt: Date,
+	favArticles: [favArticles],
 })
 
 // Password encryption :

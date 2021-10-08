@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Card, Icon, Modal } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addArticle, removeArticle } from './../actions'
+import axios from 'axios'
 
 const { Meta } = Card
 
 const ArticleCard = ({ art, liked }) => {
-	// const likeState = useSelector(state => state.likeReducer)
+	const token = useSelector(state => state.tokenReducer)
+	const language = useSelector(state => state.langReducer)
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [modal, setModal] = useState({})
 
@@ -25,6 +27,15 @@ const ArticleCard = ({ art, liked }) => {
 		setIsModalVisible(false)
 	}
 
+	const handleAddArticle = async article => {
+		dispatch(addArticle(art))
+		const data = await axios.post('/my-articles', {
+			article,
+			token,
+			language: language.lang,
+		})
+	}
+
 	let rightBtn = ''
 	if (liked) {
 		rightBtn = (
@@ -32,7 +43,7 @@ const ArticleCard = ({ art, liked }) => {
 				type="like"
 				key="ellipsis"
 				onClick={() => {
-					dispatch(addArticle(art))
+					handleAddArticle(art)
 				}}
 			/>
 		)
