@@ -2,6 +2,7 @@ import React from 'react'
 import './../App.css'
 import Nav from './../Nav'
 import { useSelector, useDispatch } from 'react-redux'
+import { Redirect } from 'react-router'
 import ArticleCard from '../components/ArticleCard'
 import Banner from '../components/Banner'
 import { useEffect } from 'react'
@@ -39,31 +40,34 @@ function ScreenMyArticles() {
 	// 	const filtered = myArticles.filter(art => art.language === languages.lang)
 	// 	dispatch(loadArticles(filtered))
 	// }, [myArticles])
+	if (!token) {
+		return <Redirect to="/" />
+	} else {
+		return (
+			<div>
+				<Nav />
 
-	return (
-		<div>
-			<Nav />
+				<Banner />
 
-			<Banner />
-
-			<div className="Card">
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						flexWrap: 'wrap',
-					}}
-				>
-					{' '}
-					{error}
-					{myArticles &&
-						myArticles.map((art, idx) => (
-							<ArticleCard art={art} liked={false} />
-						))}
+				<div className="Card">
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							flexWrap: 'wrap',
+						}}
+					>
+						{' '}
+						{error}
+						{myArticles &&
+							myArticles.map((art, idx) => (
+								<ArticleCard art={art} liked={false} />
+							))}
+					</div>
 				</div>
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
 export default ScreenMyArticles

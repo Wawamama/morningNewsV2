@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema({
 	},
 	tokenGeneratedAt: Date,
 	favArticles: [favArticles],
+	prefLanguage: String,
 })
 
 // Password encryption :

@@ -18,6 +18,7 @@ import { Redirect } from 'react-router'
 function ScreenSource() {
 	const [sourceList, setSourceList] = useState([])
 	const languages = useSelector(state => state.langReducer)
+	const token = useSelector(state => state.tokenReducer)
 
 	const getIcon = category => {
 		if (category === 'sports') return <FontAwesomeIcon icon={faFootballBall} />
@@ -35,36 +36,40 @@ function ScreenSource() {
 		})()
 	}, [languages])
 
-	return (
-		<div>
-			<Nav />
+	if (!token) {
+		return <Redirect to="/" />
+	} else {
+		return (
+			<div>
+				<Nav />
 
-			<Banner />
+				<Banner />
 
-			<div className="HomeThemes">
-				<List
-					itemLayout="horizontal"
-					dataSource={sourceList}
-					renderItem={item => (
-						<List.Item>
-							<List.Item.Meta
-								avatar={
-									<Avatar
-										icon={getIcon(item.category)}
-										style={{ backgroundColor: '#172774' }}
-									/>
-								}
-								title={
-									<Link to={`/articlesBySource/${item.id}`}>{item.name}</Link>
-								}
-								description={item.description}
-							/>
-						</List.Item>
-					)}
-				/>
+				<div className="HomeThemes">
+					<List
+						itemLayout="horizontal"
+						dataSource={sourceList}
+						renderItem={item => (
+							<List.Item>
+								<List.Item.Meta
+									avatar={
+										<Avatar
+											icon={getIcon(item.category)}
+											style={{ backgroundColor: '#172774' }}
+										/>
+									}
+									title={
+										<Link to={`/articlesBySource/${item.id}`}>{item.name}</Link>
+									}
+									description={item.description}
+								/>
+							</List.Item>
+						)}
+					/>
+				</div>
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
 export default ScreenSource

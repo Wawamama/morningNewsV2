@@ -79,3 +79,21 @@ exports.signIn = async (req, res, next) => {
 		})
 	}
 }
+
+exports.logout = async (req, res, next) => {
+	try {
+		const user = await User.findOneAndUpdate(
+			{ token: req.params.token },
+			{ prefLanguage: req.params.lang },
+			{ new: true }
+		)
+		res.json({
+			status: 'success',
+			userlang: user.prefLanguage,
+		})
+	} catch (err) {
+		res.json({
+			status: 'fail',
+		})
+	}
+}

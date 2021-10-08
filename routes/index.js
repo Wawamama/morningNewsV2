@@ -1,5 +1,5 @@
 const express = require('express')
-const { signUp, signIn } = require('./../controllers/userController')
+const { signUp, signIn, logout } = require('./../controllers/userController')
 const {
 	getArticles,
 	addArticle,
@@ -18,5 +18,6 @@ router.post('/sign-in', signIn)
 router.get('/my-articles/:token', getArticles)
 router.post('/my-articles', addArticle)
 // router.delete('/my-articles', deleteArticle)
+router.get('/logout/:token/:lang', logout)
 
 module.exports = router

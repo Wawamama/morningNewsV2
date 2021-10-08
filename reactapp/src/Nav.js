@@ -10,6 +10,14 @@ function Nav() {
 	const dispatch = useDispatch()
 	const myArticles = useSelector(state => state.articlesReducer)
 	const token = useSelector(state => state.tokenReducer)
+	const languages = useSelector(state => state.langReducer)
+
+	const handleLogout = async () => {
+		const result = await fetch(`/logout/${token}/${languages.lang}`)
+		const dat = result.json()
+		dispatch(deleteToken())
+	}
+
 	return (
 		<nav>
 			<Menu style={{ textAlign: 'center' }} mode="horizontal" theme="dark">
@@ -29,7 +37,7 @@ function Nav() {
 
 				<Menu.Item key="app">
 					{token ? (
-						<Link to="/" onClick={() => dispatch(deleteToken())}>
+						<Link to="/" onClick={() => handleLogout()}>
 							<Icon type="logout" />
 							Logout
 						</Link>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Redirect } from 'react-router'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import './../App.css'
 import Nav from './../Nav'
@@ -9,6 +11,7 @@ import Banner from '../components/Banner'
 function ScreenArticlesBySource() {
 	const { source } = useParams()
 	const [articles, setArticles] = useState([])
+	const token = useSelector(state => state.tokenReducer)
 
 	useEffect(() => {
 		;(async () => {
@@ -19,25 +22,29 @@ function ScreenArticlesBySource() {
 		})()
 	}, [source])
 
-	return (
-		<div>
-			<Nav />
-			<Banner />
-			<div className="Card">
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						flexWrap: 'wrap',
-					}}
-				>
-					{articles.map((art, idx) => (
-						<ArticleCard art={art} liked={true} />
-					))}
+	if (!token) {
+		return <Redirect to="/" />
+	} else {
+		return (
+			<div>
+				<Nav />
+				<Banner />
+				<div className="Card">
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							flexWrap: 'wrap',
+						}}
+					>
+						{articles.map((art, idx) => (
+							<ArticleCard art={art} liked={true} />
+						))}
+					</div>
 				</div>
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
 export default ScreenArticlesBySource
