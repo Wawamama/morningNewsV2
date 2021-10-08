@@ -5,7 +5,7 @@ const validator = require('validator')
 const favArticles = mongoose.Schema({
 	title: String,
 	url: String,
-	imgUrl: String,
+	urlToImage: String,
 	description: String,
 	content: String,
 	language: String,

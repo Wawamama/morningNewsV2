@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
 router.post('/sign-up', signUp)
 router.post('/sign-in', signIn)
 
-router.get('/my-articles', getArticles)
+router.get('/my-articles/:token', getArticles)
 router.post('/my-articles', addArticle)
 // router.delete('/my-articles', deleteArticle)
 

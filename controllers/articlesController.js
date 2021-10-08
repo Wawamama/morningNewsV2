@@ -2,10 +2,12 @@ const User = require('./../models/userModel')
 
 exports.getArticles = async (req, res, next) => {
 	try {
-		const user = await User.findOne({ email: req.body.email })
+		console.log(req.params)
+		const user = await User.findOne({ token: req.params.token })
+		console.log(user)
 		res.json({
 			status: 'success',
-			articles: user.favArticles,
+			user,
 		})
 	} catch (err) {
 		res.json({
@@ -20,7 +22,7 @@ exports.addArticle = async (req, res, next) => {
 			title: req.body.article.title,
 			url: req.body.article.url,
 			description: req.body.article.description,
-			urlImg: req.body.article.urlToImage,
+			urlToImage: req.body.article.urlToImage,
 			content: req.body.article.content,
 			language: req.body.language,
 		}

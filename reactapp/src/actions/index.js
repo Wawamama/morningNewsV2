@@ -12,6 +12,13 @@ export const removeArticle = art => {
 	}
 }
 
+export const loadArticles = articles => {
+	return {
+		type: 'LOAD_ARTICLES',
+		articles,
+	}
+}
+
 export const addToken = token => {
 	return {
 		type: 'ADD_TOKEN',

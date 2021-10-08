@@ -6,6 +6,9 @@ const articlesReducer = (state = [], action) => {
 	} else if (action.type === 'REMOVE_ARTICLE') {
 		const filteredArt = state.filter(art => art.title !== action.payload.title)
 		return filteredArt
+	} else if (action.type === 'LOAD_ARTICLES') {
+		const articles = action.articles
+		return articles
 	} else {
 		return state
 	}
