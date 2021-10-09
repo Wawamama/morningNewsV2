@@ -4,7 +4,10 @@ const validator = require('validator')
 
 const favArticles = mongoose.Schema({
 	title: String,
-	url: String,
+	url: {
+		type: String,
+		unique: [true, 'This article is already in the list'],
+	},
 	urlToImage: String,
 	description: String,
 	content: String,

@@ -36,6 +36,14 @@ const ArticleCard = ({ art, liked }) => {
 		})
 	}
 
+	const deleteArticle = async article => {
+		dispatch(removeArticle(art))
+		const data = await fetch(`/my-articles/${token}/${article.title}`, {
+			method: 'DELETE',
+		})
+		const result = data.json()
+	}
+
 	let rightBtn = ''
 	if (liked) {
 		rightBtn = (
@@ -53,7 +61,7 @@ const ArticleCard = ({ art, liked }) => {
 				type="delete"
 				key="ellipsis"
 				onClick={() => {
-					dispatch(removeArticle(art))
+					deleteArticle(art)
 				}}
 			/>
 		)

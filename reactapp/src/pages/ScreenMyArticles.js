@@ -7,7 +7,6 @@ import ArticleCard from '../components/ArticleCard'
 import Banner from '../components/Banner'
 import { useEffect } from 'react'
 import { loadArticles } from '../actions'
-import axios from 'axios'
 
 // const { Meta } = Card
 

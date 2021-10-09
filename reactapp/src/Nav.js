@@ -8,7 +8,6 @@ import { deleteToken } from './actions'
 
 function Nav() {
 	const dispatch = useDispatch()
-	const myArticles = useSelector(state => state.articlesReducer)
 	const token = useSelector(state => state.tokenReducer)
 	const languages = useSelector(state => state.langReducer)
 
@@ -31,7 +30,7 @@ function Nav() {
 				<Menu.Item key="test">
 					<Link to="/my-articles">
 						<Icon type="read" />
-						My Articles ({myArticles && myArticles.length})
+						My Articles
 					</Link>
 				</Menu.Item>
 

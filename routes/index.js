@@ -17,7 +17,7 @@ router.post('/sign-in', signIn)
 
 router.get('/my-articles/:token', getArticles)
 router.post('/my-articles', addArticle)
-// router.delete('/my-articles', deleteArticle)
-router.get('/logout/:token/:lang', logout)
+router.delete('/my-articles/:token/:id', deleteArticle)
+router.get('/logout/:token/:lang', logout) // WTF, should be a PUT request
 
 module.exports = router
