@@ -5,7 +5,7 @@ import './../App.css'
 import { Input, Button } from 'antd'
 import { Redirect } from 'react-router'
 import axios from 'axios'
-import { addToken } from '../actions'
+import { addToken, changeLanguage } from '../actions'
 
 function ScreenHome() {
 	const dispatch = useDispatch()
@@ -21,6 +21,19 @@ function ScreenHome() {
 		email: '',
 		password: '',
 	})
+
+	const getCountry = lang => {
+		switch (lang) {
+			case 'fr':
+				return { lang: 'fr', country: 'fr' }
+			case 'en':
+				return { lang: 'gb', country: 'en' }
+			case 'ru':
+				return { lang: 'ru', country: 'ru' }
+			default:
+				return { lang: 'fr', country: 'fr' }
+		}
+	}
 
 	const handleSubmitSignUp = async () => {
 		try {
@@ -47,6 +60,8 @@ function ScreenHome() {
 			})
 			if (req.data.status === 'success') {
 				dispatch(addToken(req.data.data.data.token))
+				const languagesPref = getCountry(req.data.data.data.prefLanguage)
+				dispatch(changeLanguage(languagesPref.lang, languagesPref.country))
 			} else {
 				setSignInError(req.data.message)
 			}
