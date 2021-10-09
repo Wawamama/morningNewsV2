@@ -27,7 +27,7 @@ exports.addArticle = async (req, res, next) => {
 		}
 		const user = await User.findOneAndUpdate(
 			{ token: req.body.token },
-			{ $push: { favArticles: addedArticle } },
+			{ $addToSet: { favArticles: addedArticle } },
 			{ new: true }
 		)
 
