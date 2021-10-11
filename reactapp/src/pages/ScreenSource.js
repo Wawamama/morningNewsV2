@@ -30,7 +30,8 @@ function ScreenSource() {
 	useEffect(() => {
 		;(async () => {
 			const data = await axios(
-				`https://newsapi.org/v2/top-headlines/sources?apiKey=c671236d46f64be8973fffcae816ca7c&country=${languages.country}&language=${languages.lang}`
+				// Enter your own API key
+				`https://newsapi.org/v2/top-headlines/sources?apiKey=<API_KEY>c&country=${languages.country}&language=${languages.lang}`
 			)
 			setSourceList(data.data.sources)
 		})()
